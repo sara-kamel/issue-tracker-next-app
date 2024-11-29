@@ -17,15 +17,15 @@ const NavBar = () => {
       </Link>
       {navLinks.map(link => (
         <ul className='flex'>
-          <li
+          <Link
             className={`${
               link.href === currentPath ? 'text-zinc-900' : 'text-zinc-500'
             } hover:text-zinc-800 `}
+            key={link.href}
+            href={link.href}
           >
-            <Link key={link.href} href={link.href}>
-              {link.label}
-            </Link>
-          </li>
+            {link.label}
+          </Link>
         </ul>
       ))}
     </nav>
