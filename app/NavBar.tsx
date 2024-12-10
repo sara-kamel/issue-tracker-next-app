@@ -16,12 +16,11 @@ const NavBar = () => {
         <FaBug />
       </Link>
       {navLinks.map(link => (
-        <ul className='flex'>
+        <ul className='flex' key={link.href}>
           <Link
             className={`${
               link.href === currentPath ? 'text-zinc-900' : 'text-zinc-500'
             } hover:text-zinc-800 `}
-            key={link.href}
             href={link.href}
           >
             {link.label}
