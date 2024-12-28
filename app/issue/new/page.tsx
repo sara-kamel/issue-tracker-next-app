@@ -1,6 +1,6 @@
 'use client'
-import React from 'react'
-import { TextField, Button } from '@radix-ui/themes'
+import React, { useState } from 'react'
+import { TextField, Button, Callout } from '@radix-ui/themes'
 import SimpleMDE from 'react-simplemde-editor'
 import { Controller, useForm } from 'react-hook-form'
 import 'easymde/dist/easymde.min.css'
@@ -15,31 +15,42 @@ interface IssueForm {
 const NewIssue = () => {
   const { register, handleSubmit, control } = useForm<IssueForm>()
   const router = useRouter()
+  const [error, setError] = useState('')
 
   return (
-    <form
-      className='max-w-xl space-y-3'
-      onSubmit={handleSubmit(async data => {
-        try {
-          await axios.post('/api/issues', data)
-          router.push('/issue')
-        } catch (error) {}
-      })}
-    >
-      <TextField.Root
-        placeholder='Title'
-        {...register('title')}
-      ></TextField.Root>
-      <Controller
-        name='description'
-        control={control}
-        render={({ field }) => (
-          <SimpleMDE placeholder='Description ...' {...field} />
-        )}
-      />
+    <div className='max-w-xl'>
+      {error && (
+        <Callout.Root color='red' className='mb-3'>
+          <Callout.Text>{error}</Callout.Text>
+        </Callout.Root>
+      )}
 
-      <Button>Submit</Button>
-    </form>
+      <form
+        className='space-y-3'
+        onSubmit={handleSubmit(async data => {
+          try {
+            await axios.post('/api/issues', data)
+            router.push('/issue')
+          } catch (error) {
+            setError('An unexpected error occurred')
+          }
+        })}
+      >
+        <TextField.Root
+          placeholder='Title'
+          {...register('title')}
+        ></TextField.Root>
+        <Controller
+          name='description'
+          control={control}
+          render={({ field }) => (
+            <SimpleMDE placeholder='Description ...' {...field} />
+          )}
+        />
+
+        <Button>Submit</Button>
+      </form>
+    </div>
   )
 }
 
