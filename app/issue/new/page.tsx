@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { TextField, Button, Callout, Text } from '@radix-ui/themes'
+import { TextField, Button, Callout, Text, Spinner } from '@radix-ui/themes'
 import SimpleMDE from 'react-simplemde-editor'
 import { Controller, useForm } from 'react-hook-form'
 import 'easymde/dist/easymde.min.css'
@@ -24,6 +24,7 @@ const NewIssue = () => {
   })
   const router = useRouter()
   const [error, setError] = useState('')
+  const [isSubmitting, setisSubmitting] = useState(false)
 
   return (
     <div className='max-w-xl'>
@@ -37,9 +38,11 @@ const NewIssue = () => {
         className='space-y-3'
         onSubmit={handleSubmit(async data => {
           try {
+            setisSubmitting(true)
             await axios.post('/api/issues', data)
             router.push('/issue')
           } catch (error) {
+            setisSubmitting(false)
             setError('An unexpected error occurred')
           }
         })}
@@ -57,7 +60,9 @@ const NewIssue = () => {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button>Submit</Button>
+        <Button disabled={isSubmitting}>
+          Submit <Spinner loading={isSubmitting} />
+        </Button>
       </form>
     </div>
   )
