@@ -4,7 +4,9 @@ import prisma from '@/prisma/client'
 import IssueActions from './IssueActions'
 
 const IssuesPage = async () => {
-  const issues = await prisma.issue.findMany()
+  const issues = await prisma.issue.findMany({
+    orderBy: { id: 'asc' }
+  })
   return (
     <div>
       <IssueActions />
