@@ -5,7 +5,9 @@ import IssueActions from './IssueActions'
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany({
-    orderBy: { id: 'asc' }
+    orderBy: {
+      createdAt: 'asc'
+    }
   })
   return (
     <div>
@@ -38,7 +40,7 @@ const IssuesPage = async () => {
                 <IssueStatusBadge status={issue.status} />
               </Table.Cell>
               <Table.Cell className='hidden md:table-cell'>
-                {issue.creatAt.toDateString()}
+                {issue.createdAt.toDateString()}
               </Table.Cell>
             </Table.Row>
           ))}
