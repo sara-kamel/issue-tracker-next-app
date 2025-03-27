@@ -10,8 +10,8 @@ import QueryClientProvider from './QueryClientProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Issue Tracker',
-  description: 'Issue Tracker'
+  title: 'Issue Tracker - Dashboard',
+  description: 'View a Summary Of Project Issues'
 }
 
 export default function RootLayout ({

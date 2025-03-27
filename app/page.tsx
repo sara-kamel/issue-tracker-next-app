@@ -3,7 +3,6 @@ import IssueSummery from './IssueSummery'
 import LatestIssues from './LatestIssues'
 import IssueChart from './IssueChart'
 import { Flex, Grid } from '@radix-ui/themes'
-import { initialize } from 'next/dist/server/lib/render-server'
 
 export default async function Home () {
   const open = await prisma.issue.count({
