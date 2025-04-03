@@ -4,10 +4,9 @@ import prisma from '@/prisma/client'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function PATCH (
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+type tParams = Promise<{ id: string }>
+
+export async function PATCH (request: NextRequest, props: { params: tParams }) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({}, { status: 401 })
 
@@ -25,7 +24,7 @@ export async function PATCH (
     if (!user)
       return NextResponse.json({ error: 'Invalid User' }, { status: 400 })
   }
-  const { id } = await params
+  const { id } = await props.params
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(id) }
   })
@@ -43,13 +42,10 @@ export async function PATCH (
   return NextResponse.json(updatedIssue)
 }
 
-export async function DELETE (
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE (request: NextRequest, props: { params: tParams }) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({}, { status: 401 })
-  const { id } = await params
+  const { id } = await props.params
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(id) }
   })
