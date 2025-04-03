@@ -6,7 +6,13 @@ import IssueTable, { columnsNames, IssueQuery } from './IssueTable'
 import { Flex } from '@radix-ui/themes'
 import type { Metadata } from 'next'
 
-const IssuesPage = async ({ searchParams }: { searchParams: IssueQuery }) => {
+type tSearchParams = Promise<IssueQuery>
+
+const IssuesPage = async ({
+  searchParams
+}: {
+  searchParams: tSearchParams
+}) => {
   const resolvedSearchParams = await searchParams
   const statusFilter = resolvedSearchParams?.status as Status
 

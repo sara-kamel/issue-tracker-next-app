@@ -8,14 +8,15 @@ import { getServerSession } from 'next-auth'
 import authOptions from '@/app/auth/authOptions'
 import AssigneeSelect from './AssigneeSelect'
 import { cache } from 'react'
-interface Props {
-  params: { id: string }
-}
+import type { Metadata } from 'next'
+
+type Params = Promise<{ id: string }>
+
 const fetchUser = cache((userId: number) =>
   prisma.issue.findUnique({ where: { id: userId } })
 )
 
-const IssueDetailPage = async ({ params }: Props) => {
+const IssueDetailPage = async ({ params }: { params: Params }) => {
   const session = await getServerSession(authOptions)
   const { id } = await params
   const issue = await fetchUser(parseInt(id))
@@ -39,7 +40,13 @@ const IssueDetailPage = async ({ params }: Props) => {
     </Grid>
   )
 }
-export async function generateMetadata ({ params }: Props) {
+
+type MetaDataProps = {
+  params: Promise<{ id: string }>
+}
+export async function generateMetadata ({
+  params
+}: MetaDataProps): Promise<Metadata> {
   const { id } = await params
   const issue = await fetchUser(parseInt(id))
   return {

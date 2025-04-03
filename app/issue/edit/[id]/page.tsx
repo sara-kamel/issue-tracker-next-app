@@ -2,11 +2,8 @@ import { notFound } from 'next/navigation'
 import prisma from '@/prisma/client'
 import DynamicIssueForm from '../../_components/DynamicIssueForm'
 
-interface Props {
-  params: { id: string }
-}
-
-const EditIssuePage = async ({ params }: Props) => {
+type Params = Promise<{ id: string }>
+const EditIssuePage = async ({ params }: { params: Params }) => {
   const { id } = await params
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(id) }
