@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import prisma from '@/prisma/client'
 import IssueSummery from './IssueSummery'
 import LatestIssues from './LatestIssues'
