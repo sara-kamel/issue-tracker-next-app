@@ -18,7 +18,7 @@ export default async function Home () {
   return (
     <Grid columns={{ initial: '1', md: '2' }} gap='5'>
       <Flex direction='column' gap='5'>
-        <IssueSummery />
+        <IssueSummery open={open} closed={closed} inProgress={inProgress} />
         <IssueChart open={open} closed={closed} inProgress={inProgress} />
       </Flex>
       <LatestIssues />
