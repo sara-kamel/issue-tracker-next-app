@@ -13,7 +13,7 @@ const IssueStatusFilter = () => {
   const searchParams = useSearchParams()
   return (
     <Select.Root
-      defaultValue={searchParams.get('status') || 'all'}
+      value={searchParams.get('status') || 'all'}
       onValueChange={status => {
         const params = new URLSearchParams()
         if (status !== 'all' || '') params.append('status', status)
